@@ -28,9 +28,9 @@ Please see https://github.com/openwrt/packages/blob/master/net/adblock/files/REA
 endef
 
 define Package/adblock/conffiles
-/etc/config/adblock
-/etc/adblock/adblock.whitelist
-/etc/adblock/adblock.blacklist
+/opt/etc/config/adblock
+/opt/etc/adblock/adblock.whitelist
+/opt/etc/adblock/adblock.blacklist
 endef
 
 define Build/Prepare
@@ -43,18 +43,19 @@ define Build/Compile
 endef
 
 define Package/adblock/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) ./files/adblock.sh $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/opt/usr/bin
+	$(INSTALL_BIN) ./files/adblock.sh $(1)/opt/usr/bin/
 
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/adblock.init $(1)/etc/init.d/adblock
+	$(INSTALL_DIR) $(1)/opt/etc/init.d
+	$(INSTALL_BIN) ./files/adblock.init $(1)/opt/etc/init.d/adblock
 
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) ./files/adblock.conf $(1)/etc/config/adblock
+	$(INSTALL_DIR) $(1)/opt/etc/config
+	$(INSTALL_CONF) ./files/adblock.conf $(1)/opt/etc/config/adblock
 
-	$(INSTALL_DIR) $(1)/etc/adblock
-	$(INSTALL_CONF) ./files/adblock.blacklist $(1)/etc/adblock/
-	$(INSTALL_CONF) ./files/adblock.whitelist $(1)/etc/adblock/
+	$(INSTALL_DIR) $(1)/opt/etc/adblock
+	$(INSTALL_CONF) ./files/adblock.conf $(1)/opt/etc/adblock/adblock.conf.default
+	$(INSTALL_CONF) ./files/adblock.blacklist $(1)/opt/etc/adblock/
+	$(INSTALL_CONF) ./files/adblock.whitelist $(1)/opt/etc/adblock/
 endef
 
 $(eval $(call BuildPackage,adblock))

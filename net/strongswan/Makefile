@@ -118,7 +118,7 @@ endef
 
 define Package/strongswan
 $(call Package/strongswan/Default)
-  DEPENDS:= +libpthread
+  DEPENDS:= +libpthread +iptables +libuci
 endef
 
 define Package/strongswan/config
@@ -291,7 +291,7 @@ endef
 define Package/strongswan-isakmp/description
 $(call Package/strongswan/description/Default)
  This meta-package contains only dependencies to establish  ISAKMP /
- IKE PSK connections, dropping other capabilities in favor of small size 
+ IKE PSK connections, dropping other capabilities in favor of small size
  Can fit most routers even with 4Mb flash (after removing IPv6 support).
 endef
 
@@ -437,8 +437,10 @@ CONFIGURE_ARGS+= \
 	) \
 	ac_cv_search___atomic_load=no
 
-EXTRA_LDFLAGS+= -Wl,-rpath-link,$(STAGING_DIR)/opt/lib
-
+EXTRA_LDFLAGS+= -Wl,-rpath-link,$(STAGING_DIR)/opt/lib -Wl,-rpath-link,$(STAGING_DIR)/opt/usr/lib
+TARGET_CFLAGS += -I$(STAGING_DIR)/opt/usr/include
+export PATH := $(PATH):/usr/share/pkgconfig
+PKG_CONFIG_PATH := $(PKG_CONFIG_PATH):/usr/share/pkgconfig
 define Package/strongswan/conffiles
 /opt/etc/ipsec.d/
 /opt/etc/ipsec.conf

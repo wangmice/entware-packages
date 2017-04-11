@@ -32,7 +32,6 @@ PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-
 define Package/shadowsocks-libev-config
   SECTION:=net
   CATEGORY:=Network
