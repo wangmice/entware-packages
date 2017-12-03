@@ -13,12 +13,12 @@ include $(TOPDIR)/rules.mk
 # - check if default mode has changed from being tcp_only
 #
 PKG_NAME:=shadowsocks-libev
-PKG_VERSION:=3.0.8
+PKG_VERSION:=3.1.1
 PKG_RELEASE:=15
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$(PKG_VERSION)
-PKG_HASH:=3bdf7f8f89050aee896496fd86b6b7ef694754f0b8cd97c4b5a04d1d3e5c2e5b
+PKG_HASH:=24A002C100FBE9B4481E3134273CB1A2F25A4026EB030760E7E7EB57F8466EF6
 
 PKG_MAINTAINER:=Yousong Zhou <yszhou4tech@gmail.com>
 
@@ -58,7 +58,7 @@ define Package/shadowsocks-libev/Default
     SUBMENU:=Web Servers/Proxies
     TITLE:=shadowsocks-libev $(1)
     URL:=https://github.com/shadowsocks/shadowsocks-libev
-    DEPENDS:=+libev +libmbedtls +libpcre +libpthread +libsodium +libudns +shadowsocks-libev-config +zlib
+    DEPENDS:=+libev +libmbedtls +libpcre +libpthread +libsodium +libcares +shadowsocks-libev-config +zlib
   endef
 
   define Package/shadowsocks-libev-$(1)/install
@@ -89,9 +89,9 @@ endef
 define Package/shadowsocks-libev-ss-rules/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) ./files/ss-rules $(1)/opt/bin
-#	$(INSTALL_DIR) $(1)/etc
-#	$(INSTALL_DATA) ./files/firewall.ss-rules $(1)/etc
-#	$(INSTALL_BIN) ./files/ss-rules.defaults $(1)/etc/uci-defaults
+#	$(INSTALL_DIR) $(1)/opt/etc
+#	$(INSTALL_DATA) ./files/firewall.ss-rules $(1)/opt/etc
+#	$(INSTALL_BIN) ./files/ss-rules.defaults $(1)/opt/etc/uci-defaults
 endef
 
 define Build/Prepare
